@@ -11,6 +11,7 @@ if zn then
 	for i,v in ipairs(zn.properties) do
 		if v.key == "mission_name" then
 			mname = v.value
+			break
 		end
 	end
 	
