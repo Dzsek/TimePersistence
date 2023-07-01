@@ -44,8 +44,8 @@ base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.
 
 # Caveats
 
-- It autoinserts a script into your mission if the mission is set up using the trigger zone mentioned above
-- You will need to update me_mission.lua after each update as it gets reset
+- It autoinserts a script into your mission if the mission is set up using the trigger zone mentioned above and the mission is opened and saved in the ME
+- You will need to update me_mission.lua after each DCS update as it gets reset
 - If its not set up properly DCS might freeze when loading the mission, use at your own risk
 - If the mission is opened in the ME it will update the time to whatever it was in the save file, so you might lose the original start time of the mission
 - It only saves once per minute
