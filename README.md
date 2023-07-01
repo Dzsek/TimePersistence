@@ -5,12 +5,16 @@
 3. Open this file in a text editor and find the load function (``function load(fName, bLight)``)
 4. Scroll down until you find the line ``if env.mission.theatre == nil then``, it should be preceded by ``fun()``
 5. Between these two lines add the following code and save:
-	```lua
-		base.timepersistence={ env = env, lfs = lfs }
-		base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.lua')
-	```
-	
+```lua
+base.timepersistence={ env = env, lfs = lfs }
+base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.lua')
+```
+
+![me_mission.lua example](/me_mission.png)
+
 6. To enable time persistence for a mission you will have to add a trigger zone in the mission, anywhere on the map, and name it "props". Then create a property on that triggerzone called ``mission_name`` and set its value to something unique to your mission. This will be used to identify which time persistence file to load for each mission.
+
+![Trigger zone example](/triggerzone.png)
 
 
 # Caveats
