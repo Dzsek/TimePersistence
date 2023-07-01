@@ -2,7 +2,7 @@
 
 1. Copy the included Scripts folder into C:\Users\<username>\Saved Games\DCS.openbeta\ overwriting if it asks.
 2. Find the following file in your DCS installation directory: ``MissionEditor\modules\me_mission.lua``
-3. Open this file in a text editor and find the load function (``function load(fName, bLight)``)
+3. Open this file in a text editor and find the load function: ``function load(fName, bLight)``
 4. Scroll down until you find the line ``if env.mission.theatre == nil then``, it should be preceded by ``fun()``
 5. Between these two lines add the following code and save:
 ```lua
