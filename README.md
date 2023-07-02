@@ -47,3 +47,5 @@ base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.
 - If its not set up properly DCS might freeze when loading the mission, use at your own risk
 - It only saves once per minute
 - It does not work correctly if using the fly again button after stoping the mission or reloading the mission with Shift+R
+
+If you like my work, and would like to support development, feel free to [buy me a beer](https://www.buymeacoffee.com/dzsek).
