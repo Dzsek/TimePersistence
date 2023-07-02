@@ -46,5 +46,4 @@ base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.
 - You will need to update me_mission.lua after each DCS update as it gets reset
 - If its not set up properly DCS might freeze when loading the mission, use at your own risk
 - It only saves once per minute
-- Date does not progress correctly at the moment, working on a fix
 - It does not work correctly if using the fly again button after stoping the mission or reloading the mission with Shift+R

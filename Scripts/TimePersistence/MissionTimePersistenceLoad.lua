@@ -282,59 +282,35 @@ if zn then
 		local filename = lfs.writedir()..'Missions/Saves/'..mname..'.time'
 		if lfs.attributes(filename) then
 			local dataFile = io.open(filename, "r")
-			local datastr = dataFile:read('*all')
+			local tm = tonumber(dataFile:read('*line'))
+			local day = tonumber(dataFile:read('*line'))
+			local month = tonumber(dataFile:read('*line'))
+			local year = tonumber(dataFile:read('*line'))
 			dataFile:close()
-			local tm = tonumber(datastr)
 			if tm then
 				if tm > 86400 then
-					local leapDay = 0
-					if timepersistence.mission.date.Year % 4 == 0 then
-						if timepersistence.mission.date.Year % 100 == 0 then
-							if timepersistence.mission.date.Year % 400 == 0 then
-								leapDay = 1
-							end
-						else
-							leapDay = 1
-						end
-					end
-
-					local daysInMonth = 30
-					if timepersistence.mission.date.Month == 2 then
-						daysInMonth = 28 + leapDay;
-					else
-						daysInMonth = 31 - (timepersistence.mission.date.Month - 1) % 7 % 2;
-					end
-
-					if timepersistence.mission.date.Day == daysInMonth then
-						timepersistence.mission.date.Day = 1
-						if timepersistence.mission.date.Month == 12 then 
-							timepersistence.mission.date.Month = 1
-							timepersistence.mission.date.Year = timepersistence.mission.date.Year + 1
-						else
-							timepersistence.mission.date.Month = timepersistence.mission.date.Month + 1
-						end
-					else
-						timepersistence.mission.date.Day = timepersistence.mission.date.Day + 1
-					end
-
 					tm = tm - 86400
-
-					local f = io.open(filename, "w")
-					f:write(tostring(tm))
-					f:close()
 				end
-
+				
 				timepersistence.mission.start_time = tm
+
+				if day and month and year then
+					timepersistence.mission.date.Year = year
+					timepersistence.mission.date.Month = month
+					timepersistence.mission.date.Day = day
+				end
 			end
+		else
+			local out = tostring(timepersistence.mission.start_time)..'\n'
+			out = out..tostring(timepersistence.mission.date.Day)..'\n'
+			out = out..tostring(timepersistence.mission.date.Month)..'\n'
+			out = out..tostring(timepersistence.mission.date.Year)
+
+			local f = io.open(lfs.writedir()..'Missions/Saves/'..mname..'.time','w')
+			f:write(out)
+			f:close()
 		end
 		
-		local trig = nil
-		for i,v in ipairs(timepersistence.mission.trigrules) do
-			if v.comment=="timesave" then
-				trig = v
-			end
-		end
-
 		local actions = {
 			{
 				text="if lfs then local file = lfs.writedir()..'/Scripts/TimePersistence/MissionTimePersistenceSave.lua' if lfs.attributes(file) then dofile(file) end end",
@@ -342,21 +318,17 @@ if zn then
 			}
 		}
 
-		if not trig then
-			table.insert(timepersistence.mission.trigrules,
-			{
-				rules={},
-				comment="timesave",
-				eventlist="",
-				actions=actions,
-				predicate="triggerStart"
-			})
-		else
-			trig.predicate = "triggerStart"
-			trig.actions = actions
-		end
+		local new = {
+			rules={},
+			comment="timesave",
+			eventlist="",
+			actions=actions,
+			predicate="triggerStart"
+		}
 
-		timepersistence.mission.trigrules = timepersistence.trig.loadTriggers(timepersistence.mission.trigrules)
+		local conv = timepersistence.trig.loadTriggers({new})
+
+		table.insert(timepersistence.mission.trigrules, conv[1])
 	end
 
 	local temp = nil
