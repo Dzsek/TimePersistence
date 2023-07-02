@@ -279,6 +279,23 @@ if zn then
 	end
 
 	if mname then
+		local skip_night = nil
+		for i,v in ipairs(zn.properties) do
+			if v.key == "skip_night" then
+				skip_night = v.value
+				break
+			end
+		end
+	
+		local dusk = 86400
+		local dawn = 0
+		if skip_night then
+			local match = skip_night:gmatch("([0-9.]*)|([0-9.]*)") 
+			dusk, dawn = match()
+			dusk = dusk*60*60
+			dawn = dawn*60*60
+		end	
+
 		local filename = lfs.writedir()..'Missions/Saves/'..mname..'.time'
 		if lfs.attributes(filename) then
 			local dataFile = io.open(filename, "r")
@@ -288,8 +305,47 @@ if zn then
 			local year = tonumber(dataFile:read('*line'))
 			dataFile:close()
 			if tm then
-				if tm > 86400 then
-					tm = tm - 86400
+				local skip_day = false
+				if tm > dusk then
+					tm = dawn
+					skip_day = true
+				end
+				   
+				if tm < dawn then
+					tm = dawn
+					skip_day = true
+				end
+
+				if skip_day then
+					local leapDay = 0
+					if year % 4 == 0 then
+						if year % 100 == 0 then
+							if year % 400 == 0 then
+								leapDay = 1
+							end
+						else
+							leapDay = 1
+						end
+					end
+				
+					local daysInMonth = 30
+					if month == 2 then
+						daysInMonth = 28 + leapDay;
+					else
+						daysInMonth = 31 - (month - 1) % 7 % 2;
+					end
+
+					if day == daysInMonth then
+						day = 1
+						if month == 12 then 
+							month = 1
+							year = year + 1
+						else
+							month = month + 1
+						end
+					else
+						day = day + 1
+					end
 				end
 				
 				timepersistence.mission.start_time = tm
@@ -298,6 +354,15 @@ if zn then
 					timepersistence.mission.date.Year = year
 					timepersistence.mission.date.Month = month
 					timepersistence.mission.date.Day = day
+
+					local out = tostring(tm)..'\n'
+					out = out..tostring(day)..'\n'
+					out = out..tostring(month)..'\n'
+					out = out..tostring(year)
+
+					local f = io.open(lfs.writedir()..'Missions/Saves/'..mname..'.time','w')
+					f:write(out)
+					f:close()
 				end
 			end
 		else

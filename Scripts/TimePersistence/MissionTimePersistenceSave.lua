@@ -68,7 +68,7 @@ if zn then
 			tm = timer.getAbsTime()
 			tm = tm - (86400*TimePersistence.daysPast)
 
-			if tm > 86400*TimePersistence.daysPast then
+			if tm > 86400*(TimePersistence.daysPast+1) then
 				TimePersistence.daysPast = TimePersistence.daysPast+1
 				tm = tm - 86400
 

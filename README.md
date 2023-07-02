@@ -36,10 +36,18 @@ base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.
   end
   ```
    
-6. To enable time persistence for a mission you will have to add a trigger zone in the mission, anywhere on the map, and name it "props". Then create a property on that triggerzone called ``mission_name`` and set its value to something unique to your mission. This will be used to identify which time persistence file to load for each mission. You can also activate randomization of temperature, clouds and wind. See image below
+6. To enable time persistence for a mission you will have to add a trigger zone in the mission, anywhere on the map, and name it "props". Then create a property on that triggerzone called ``mission_name`` and set its value to something unique to your mission. This will be used to identify which time persistence file to load for each mission. You can also activate randomization of temperature, clouds and wind. See image below. To disable a setting either delete it or rename it to something else (ex. skip_night_disabled).
 
 ![Trigger zone example](/triggerzone.png)
 
+
+|Parameter|Value|
+|:---|:---|
+|mission_name|String that identifies the time save file used for this mission|
+|temp|If value is 'true', temperature will be updated based on date and time of day on mission start|
+|clouds|If value is 'true', cloud preset will be randomized on mission start|
+|wind| If value is 'true', wind speed and direction will be randomized on mission start|
+|skip_night| Value should be in the following format: dusk hr\|dawn hr. For example "20.5\|8" means dusk is at 20:30 and dawn is at 8:00. If property is present and last saved time is between these values the mission will skip ahead to the dawn value. |
 
 # Caveats
 
