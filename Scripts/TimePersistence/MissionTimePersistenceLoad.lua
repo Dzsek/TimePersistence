@@ -259,11 +259,10 @@ local clouds_data = {
 }
 
 
-local env = timepersistence.env
 local lfs = timepersistence.lfs
 
 local zn = nil
-for i,v in ipairs(env.mission.triggers.zones) do
+for i,v in ipairs(timepersistence.mission.triggers.zones) do
 	if v.name == "props" then
 		zn = v
 		break
@@ -289,9 +288,9 @@ if zn then
 			if tm then
 				if tm > 86400 then
 					local leapDay = 0
-					if env.mission.date.Year % 4 == 0 then
-						if env.mission.date.Year % 100 == 0 then
-							if env.mission.date.Year % 400 == 0 then
+					if timepersistence.mission.date.Year % 4 == 0 then
+						if timepersistence.mission.date.Year % 100 == 0 then
+							if timepersistence.mission.date.Year % 400 == 0 then
 								leapDay = 1
 							end
 						else
@@ -300,22 +299,22 @@ if zn then
 					end
 
 					local daysInMonth = 30
-					if env.mission.date.Month == 2 then
+					if timepersistence.mission.date.Month == 2 then
 						daysInMonth = 28 + leapDay;
 					else
-						daysInMonth = 31 - (env.mission.date.Month - 1) % 7 % 2;
+						daysInMonth = 31 - (timepersistence.mission.date.Month - 1) % 7 % 2;
 					end
 
-					if env.mission.date.Day == daysInMonth then
-						env.mission.date.Day = 1
-						if env.mission.date.Month == 12 then 
-							env.mission.date.Month = 1
-							env.mission.date.Year = env.mission.date.Year + 1
+					if timepersistence.mission.date.Day == daysInMonth then
+						timepersistence.mission.date.Day = 1
+						if timepersistence.mission.date.Month == 12 then 
+							timepersistence.mission.date.Month = 1
+							timepersistence.mission.date.Year = timepersistence.mission.date.Year + 1
 						else
-							env.mission.date.Month = env.mission.date.Month + 1
+							timepersistence.mission.date.Month = timepersistence.mission.date.Month + 1
 						end
 					else
-						env.mission.date.Day = env.mission.date.Day + 1
+						timepersistence.mission.date.Day = timepersistence.mission.date.Day + 1
 					end
 
 					tm = tm - 86400
@@ -325,12 +324,12 @@ if zn then
 					f:close()
 				end
 
-				env.mission.start_time = tm
+				timepersistence.mission.start_time = tm
 			end
 		end
 		
 		local trig = nil
-		for i,v in ipairs(env.mission.trigrules) do
+		for i,v in ipairs(timepersistence.mission.trigrules) do
 			if v.comment=="timesave" then
 				trig = v
 			end
@@ -344,7 +343,7 @@ if zn then
 		}
 
 		if not trig then
-			table.insert(env.mission.trigrules,
+			table.insert(timepersistence.mission.trigrules,
 			{
 				rules={},
 				comment="timesave",
@@ -356,6 +355,8 @@ if zn then
 			trig.predicate = "triggerStart"
 			trig.actions = actions
 		end
+
+		timepersistence.mission.trigrules = timepersistence.trig.loadTriggers(timepersistence.mission.trigrules)
 	end
 
 	local temp = nil
@@ -367,8 +368,8 @@ if zn then
 	end
 
 	if temp and temp=="true" then
-		local month = weather_data.default[env.mission.date.Month]
-		local diff_from_noon = math.abs(env.mission.start_time - (86400/2))
+		local month = weather_data.default[timepersistence.mission.date.Month]
+		local diff_from_noon = math.abs(timepersistence.mission.start_time - (86400/2))
 
 		local min = month.temp.min
 		local max = month.temp.max
@@ -379,7 +380,7 @@ if zn then
 		local mappedValue = max + (normalizedValue * outRange)
 
 		mappedValue = mappedValue + math.random(-2,2)
-		env.mission.weather.season.temperature = mappedValue
+		timepersistence.mission.weather.season.temperature = mappedValue
 	end
 
 	local clouds = nil
@@ -394,7 +395,7 @@ if zn then
 		
 		local cloud = clouds_data[math.random(1,#clouds_data)]
 
-		env.mission.weather.clouds = cloud
+		timepersistence.mission.weather.clouds = cloud
 	end
 
 	local wind = nil
@@ -406,7 +407,7 @@ if zn then
 	end
 
 	if wind and wind=="true" then
-		env.mission.weather.wind = {
+		timepersistence.mission.weather.wind = {
 			atGround = { speed = math.random(0,5), dir = math.random(0,360) },
 			at2000 = { speed = math.random(0,15), dir = math.random(0,360) },
 			at8000 = { speed = math.random(0,77), dir = math.random(0,360) },

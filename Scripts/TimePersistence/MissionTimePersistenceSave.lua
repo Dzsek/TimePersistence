@@ -21,12 +21,15 @@ if zn then
 		lfs.mkdir(dir)
 		
 		timer.scheduleFunction(function(param,time) 
+			env.info("Saving time")
 			local outtime = timer.getAbsTime()
 			local f = io.open(lfs.writedir()..'Missions/Saves/'..param..'.time','w')
 			f:write(tostring(outtime))
 			f:close()
+			env.info("TimePersistence - Time Saved")
 			return time+60
 		end, mname, timer.getTime()+60)
 	end
 end
 
+env.info("TimePersistence - Time Save initialized")
