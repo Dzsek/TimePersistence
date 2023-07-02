@@ -11,7 +11,7 @@ base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.
 
 ![me_mission.lua example](/me_mission.png)
 
-6. Edit `\Scripts\MissionScripting.lua` inside your DCS installation folder:
+5. Edit `\Scripts\MissionScripting.lua` inside your DCS installation folder:
    
   Change the following section:
   ```lua
@@ -36,7 +36,7 @@ base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.
   end
   ```
    
-7. To enable time persistence for a mission you will have to add a trigger zone in the mission, anywhere on the map, and name it "props". Then create a property on that triggerzone called ``mission_name`` and set its value to something unique to your mission. This will be used to identify which time persistence file to load for each mission. You can also activate randomization of temperature, clouds and wind. See image below
+6. To enable time persistence for a mission you will have to add a trigger zone in the mission, anywhere on the map, and name it "props". Then create a property on that triggerzone called ``mission_name`` and set its value to something unique to your mission. This will be used to identify which time persistence file to load for each mission. You can also activate randomization of temperature, clouds and wind. See image below
 
 ![Trigger zone example](/triggerzone.png)
 
