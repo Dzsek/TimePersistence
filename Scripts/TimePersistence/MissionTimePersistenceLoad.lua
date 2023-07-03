@@ -448,9 +448,9 @@ if zn then
 
 	if wind and wind=="true" then
 		timepersistence.mission.weather.wind = {
-			atGround = { speed = math.random(0,5), dir = math.random(0,360) },
-			at2000 = { speed = math.random(0,15), dir = math.random(0,360) },
-			at8000 = { speed = math.random(0,77), dir = math.random(0,360) },
+			atGround = { speed = math.random(0,3), dir = math.random(0,360) },
+			at2000 = { speed = math.random(0,10), dir = math.random(0,360) },
+			at8000 = { speed = math.random(0,20), dir = math.random(0,360) },
 		}
 	end
 end
