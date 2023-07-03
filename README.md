@@ -1,6 +1,6 @@
 # This mod is experimental at the moment. You may encounter frequent issues.
 
-Version 0.1
+# Version 0.1
 
 # Installation instructions
 
