@@ -261,6 +261,9 @@ local clouds_data = {
 
 local lfs = timepersistence.lfs
 
+local dir = lfs.writedir()..'Missions/Saves/'
+lfs.mkdir(dir)
+
 local zn = nil
 for i,v in ipairs(timepersistence.mission.triggers.zones) do
 	if v.name == "props" then
