@@ -6,7 +6,7 @@
 
 1. Copy the included Scripts folder into C:\Users\<username>\Saved Games\DCS.openbeta\ overwriting if it asks.
 2. Find the following file in your DCS installation directory: ``MissionEditor\modules\me_mission.lua``
-3. Open this file in a text editor and find the load function: ``function play(params, returnScreen, a_missionPath, doNotApplyOptions, doSave, doApplyOnlyName)``
+3. Open this file in a text editor and find the play function: ``function play(params, returnScreen, a_missionPath, doNotApplyOptions, doSave, doApplyOnlyName)``
 4. Right below this line, after the comments add the following code and save:
 ```lua
 base.timepersistence={ mission = mission, lfs = lfs, trig = Trigger}
