@@ -60,5 +60,3 @@ base.dofile(lfs.writedir()..'Scripts/TimePersistence/MissionTimePersistenceLoad.
 - It only saves once per minute
 - It does not work correctly if using the fly again button after stoping the mission or reloading the mission with Shift+R
 - It does not work correctly in multiplayer
-
-If you like my work, and would like to support development, feel free to [buy me a beer](https://www.buymeacoffee.com/dzsek).
